@@ -9,11 +9,11 @@ var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
  */
 function checkAuth() {
   gapi.auth.authorize(
-      {
+    {
       'client_id': CLIENT_ID,
       'scope': SCOPES.join(' '),
       'immediate': true
-      }, handleAuthResult);
+    }, handleAuthResult);
 }
 
 /**
@@ -41,9 +41,9 @@ function handleAuthResult(authResult) {
  */
 function handleAuthClick(event) {
   gapi.auth.authorize(
-      {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
-      handleAuthResult);
-  return false;
+    {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+    handleAuthResult);
+    return false;
 }
 
 /**
@@ -65,43 +65,44 @@ function listUpcomingEvents() {
   var day = now.getUTCDate();
   var year = now. getUTCFullYear();
   var early = new Date(year, month, day);
-  var late = (new Date(early.getDate() + 1))
-    var request = gapi.client.calendar.events.list({
-        'calendarId': 'primary',
-        'timeMin': early.toISOString(),
-        'timeMax': late.toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': 100,
-        'orderBy': 'startTime'
-        });
+  var late = new Date();
+  late.setDate(early.getDate() + 1);
+  var request = gapi.client.calendar.events.list({
+    'calendarId': 'primary',
+    'timeMin': early.toISOString(),
+    'timeMax': late.toISOString(),
+    'showDeleted': false,
+    'singleEvents': true,
+    'maxResults': 100,
+    'orderBy': 'startTime'
+  });
 
   request.execute(function(resp) {
-      var events = resp.items;
-      appendPre('Upcoming events:');
+    var events = resp.items;
+    appendPre('Upcoming events:');
 
-      if (events.length > 0) {
+    if (events.length > 0) {
       for (i = 0; i < events.length; i++) {
-      var event = events[i];
-      var when = event.start.dateTime;
-      if (!when) {
-      when = event.start.date;
+        var event = events[i];
+        var when = event.start.dateTime;
+        if (!when) {
+          when = event.start.date;
+        }
+        appendPre(event.summary + ' (' + when + ')')
       }
-      appendPre(event.summary + ' (' + when + ')')
-          }
-          } else {
-          appendPre('No upcoming events found.');
-          }
+    } else {
+      appendPre('No upcoming events found.');
+    }
 
-          });
-      }
+  });
+}
 
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
+/**
+ * Append a pre element to the body containing the given message
+ * as its text node.
+ *
+ * @param {string} message Text to be placed in pre element.
+ */
 function appendPre(message) {
   var pre = document.getElementById('output');
   var textContent = document.createTextNode(message + '\n');
