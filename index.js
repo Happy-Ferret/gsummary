@@ -94,11 +94,11 @@ function listUpcomingEvents() {
   });
 
   reqToday.execute(function(resp) {
-    buildList(resp.items, document.querySelection("#today"));
+    buildList(resp.items, document.querySelector("#today"));
   });
 
   reqTomorrow.execute(function(resp) {
-    buildList(resp.items, document.querySelection("#tomorrow"));
+    buildList(resp.items, document.querySelector("#tomorrow"));
   });
 }
 
@@ -107,12 +107,12 @@ function buildList(events, div) {
     for (var e of events) {
       var p = document.createElement("p");
       p.textContent = event.summary;
-      div.appendChild(div);
+      div.appendChild(p);
     }
   } else {
     var p = document.createElement("p");
     p.textContent = "Nothing";
-    div.appendChild(div);
+    div.appendChild(p);
   }
 }
 
