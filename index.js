@@ -67,8 +67,8 @@ function listUpcomingEvents() {
   var early = new Date(year, month, day);
   var late = new Date(year, month, day, 23, 59, 59);
 
-  var earlyTomorrow = new Date();
-  var lateTomorrow = new Date();
+  var earlyTomorrow = new Date(early);
+  var lateTomorrow = new Date(late);
 
   earlyTomorrow.setDate(early.getDate() + 1);
   lateTomorrow.setDate(late.getDate() + 1);
