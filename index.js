@@ -73,6 +73,7 @@ function listUpcomingEvents() {
   earlyTomorrow.setDate(early.getDate() + 1);
   lateTomorrow.setDate(late.getDate() + 1);
 
+  console.log("Query for", early, late);
   var reqToday = gapi.client.calendar.events.list({
     'calendarId': 'primary',
     'timeMin': early.toISOString(),
@@ -83,6 +84,7 @@ function listUpcomingEvents() {
     'orderBy': 'updated'
   });
 
+  console.log("Query for", earlyTomorrow, lateTomorrow);
   var reqTomorrow = gapi.client.calendar.events.list({
     'calendarId': 'primary',
     'timeMin': earlyTomorrow.toISOString(),
@@ -106,7 +108,7 @@ function buildList(events, div) {
   if (events.length > 0) {
     for (var e of events) {
       var p = document.createElement("p");
-      p.textContent = event.summary;
+      p.textContent = e.summary;
       div.appendChild(p);
     }
   } else {
