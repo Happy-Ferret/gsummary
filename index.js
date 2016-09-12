@@ -65,7 +65,7 @@ function listUpcomingEvents() {
   var day = now.getUTCDate();
   var year = now. getUTCFullYear();
   var early = new Date(year, month, day);
-  var late = new Date();
+  var late = new Date(year, month, day, 23, 59, 59);
   late.setDate(early.getDate() + 1);
   var request = gapi.client.calendar.events.list({
     'calendarId': 'primary',
