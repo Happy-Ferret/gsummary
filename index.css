@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  font-family: LyonText,Georgia,serif;
+  background-color: white;
+  font-size: 0;
+}
+
+h1 {
+  padding: 10px;
+  font-size: 2rem;
+}
+
+p {
+  padding: 10px;
+  font-size: 1rem;
+}
+
+
+@media (min-width: 800px) {
+  div {
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+  }
+}
