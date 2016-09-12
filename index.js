@@ -96,11 +96,11 @@ function listUpcomingEvents() {
   });
 
   reqToday.execute(function(resp) {
-    buildList(resp.items, document.querySelector("#today"));
+    buildList(resp.items, document.querySelector("#today > div"));
   });
 
   reqTomorrow.execute(function(resp) {
-    buildList(resp.items, document.querySelector("#tomorrow"));
+    buildList(resp.items, document.querySelector("#tomorrow > div"));
   });
 }
 
