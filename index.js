@@ -66,34 +66,54 @@ function listUpcomingEvents() {
   var year = now. getUTCFullYear();
   var early = new Date(year, month, day);
   var late = new Date(year, month, day, 23, 59, 59);
-  var request = gapi.client.calendar.events.list({
+
+  var earlyTomorrow = new Date();
+  var lateTomorrow = new Date();
+
+  earlyTomorrow.setDate(early.getDate() + 1);
+  lateTomorrow.setDate(late.getDate() + 1);
+
+  var reqToday = gapi.client.calendar.events.list({
     'calendarId': 'primary',
     'timeMin': early.toISOString(),
     'timeMax': late.toISOString(),
     'showDeleted': false,
     'singleEvents': true,
     'maxResults': 100,
-    'orderBy': 'startTime'
+    'orderBy': 'updated'
   });
 
-  request.execute(function(resp) {
-    var events = resp.items;
-    appendPre('Upcoming events:');
+  var reqTomorrow = gapi.client.calendar.events.list({
+    'calendarId': 'primary',
+    'timeMin': earlyTomorrow.toISOString(),
+    'timeMax': lateTomorrow.toISOString(),
+    'showDeleted': false,
+    'singleEvents': true,
+    'maxResults': 100,
+    'orderBy': 'updated'
+  });
 
-    if (events.length > 0) {
-      for (i = 0; i < events.length; i++) {
-        var event = events[i];
-        var when = event.start.dateTime;
-        if (!when) {
-          when = event.start.date;
-        }
-        appendPre(event.summary + ' (' + when + ')')
-      }
-    } else {
-      appendPre('No upcoming events found.');
+  reqToday.execute(function(resp) {
+    buildList(resp.items, document.querySelection("#today"));
+  });
+
+  reqTomorrow.execute(function(resp) {
+    buildList(resp.items, document.querySelection("#tomorrow"));
+  });
+}
+
+function buildList(events, div) {
+  if (events.length > 0) {
+    for (var e of events) {
+      var p = document.createElement("p");
+      p.textContent = event.summary;
+      div.appendChild(div);
     }
-
-  });
+  } else {
+    var p = document.createElement("p");
+    p.textContent = "Nothing";
+    div.appendChild(div);
+  }
 }
 
 /**
