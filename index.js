@@ -4,6 +4,8 @@ var CLIENT_ID = '910466300469-aga20dkv89l4sf4pa1p511srm34c27fc.apps.googleuserco
 
 var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
+const TOMORROW = false;
+
 /**
  * Check if current user has authorized this application.
  */
@@ -99,9 +101,11 @@ function listUpcomingEvents() {
     buildList(resp.items, document.querySelector("#today > div"));
   });
 
-  reqTomorrow.execute(function(resp) {
-    buildList(resp.items, document.querySelector("#tomorrow > div"));
-  });
+  if (TOMORROW) {
+    reqTomorrow.execute(function(resp) {
+      buildList(resp.items, document.querySelector("#tomorrow > div"));
+    });
+  }
 }
 
 function buildList(events, div) {
