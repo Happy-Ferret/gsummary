@@ -63,9 +63,9 @@ function loadCalendarApi() {
  */
 function listUpcomingEvents() {
   var now = new Date();
-  var month = now.getUTCMonth();
-  var day = now.getUTCDate();
-  var year = now. getUTCFullYear();
+  var month = now.getMonth();
+  var day = now.getDate();
+  var year = now. getFullYear();
   var early = new Date(year, month, day);
   var late = new Date(year, month, day, 23, 59, 59);
 
